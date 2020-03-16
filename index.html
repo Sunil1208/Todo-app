@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Todo Application</title>
+  </head>
+  <body style="background-image: url(https://www.setaswall.com/wp-content/uploads/2017/11/Feathers-Wallpaper-46-2816x2112-768x576.jpg);background-size: cover; opacity: 80%;">
+    <h1 style="text-align: center; font-weight: bolder; margin-top: 30px; text-decoration: underline;">ToDo List</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <form id="form">
+                    <div class="form-group">
+                        
+                        <label for="todo">Task</label>
+                        <input  type="text" class="form-control" id="todoUserInput" placeholder="Enter a task">
+                        <br>
+                        <button title="Insert a new task" type="submit" class="btn btn-primary">Add Task</button>
+                    </div>
+                    
+                    
+                    
+                </form>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <ul class="list-group" id="display">
+                
+                </ul>
+            </div>
+            <div class="col-lg-2"></div>
+        </div> 
+        <br>
+
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="alert" role="alert" id="message">
+                    
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div> 
+
+        <!--COMPLETED TASKS-->
+        <!-- <div class="row">
+            <br>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8"><i class="fas fa-h2">COMPLETED TASKS</i>
+                <ul class="list-group" id="completed">
+                
+                </ul>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>  -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(()=>{
+            const display = $("#display");
+            const complete = $("#completed")
+            const form = $("#form");
+            const todoUserInput = $("#todoUserInput");
+            const message = $("#message");
+            message.hide();
+
+            const displayMessage = (flag,msg)=>{
+                // successful
+                if(flag){
+                    message.removeClass('alert-danger');
+                    message.addClass('alert-success');
+                    message.html(msg);
+                    message.show(1000);
+                    //message.hide();
+
+                }
+                else{
+                    message.removeClass('alert-success');
+                    message.addClass('alert-danger');
+                    message.html(msg);
+                    message.show(1000);
+                    
+                }
+            }
+
+            const displayDeleteMessage = (flag,msg)=>{
+               // const message1 = "Task successfully deleted"
+                // successful
+                if(flag){
+                    message.removeClass('alert-danger');
+                    message.addClass('alert-success');
+                    message.html("Task successfully deleted");
+                    message.show(2000);
+
+                }
+                else{
+                    message.removeClass('alert-success');
+                    message.addClass('alert-danger');
+                    message.html(msg);
+                    message.show(1000);
+                    
+                    
+                }
+            }
+ 
+            const getTodos = ()=>{
+                fetch('/getTodos',{method : "get"}).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    console.log(data);
+                    displayTodos(data);
+                });
+            }
+
+            getTodos();
+
+            const resetTodosInput = ()=>{
+                todoUserInput.val('');
+            }
+
+            const editTodo = (todo,todoID,editID)=>{
+                let editBtn = $(`#${editID}`);
+                editBtn.click(()=>{
+                    fetch(`/${todo._id}`,{
+                        method : "put",
+                        headers : {
+                            "Content-Type" : "application/json; charset=utf-8" 
+                        },
+                        body : JSON.stringify({todo : todoUserInput.val()})
+                    }).then((response)=>{
+                        return response.json();
+                    }).then((data)=>{
+                        if(data.ok == 1){
+                            let todoIndex = $(`#${todoID}`);
+                            todoIndex.html(data.value.todo);
+                            resetTodosInput();
+                        }
+                    });
+                });
+            }
+
+
+
+            const completeTodo = (todo,todoID,editID)=>{
+                let completeBtn = $(`#${editID}`);
+                completeBtn.click(()=>{
+                    fetch(`/${todo._id}`,{
+                        method : "put",
+                        headers : {
+                            "Content-Type" : "application/json; charset=utf-8" 
+                        },
+                        body : JSON.stringify({complete : true})
+                    }).then((response)=>{
+                        return response.json();
+                        console.log(json())
+                    }).then((data)=>{
+                        if(data.ok == 1){
+                            let todoIndex = $(`#${todoID}`);
+                            console.log(todoIndex.complete)
+                            console.log(data,"Striking performed")
+                            todoIndex.html(data.value.complete);
+                            //todoIndex.html(data.body.strike())
+                            //resetTodosInput();
+                        }
+                    });
+                });
+            }
+                        
+            const deleteTodo = (todo,listItemID,deleteID)=>{
+                let deleteBtn = $(`#${deleteID}`);
+                deleteBtn.click(()=>{
+                    fetch(`/${todo._id}`,{
+                        method: "delete"
+                    }).then((response)=>{
+                        return response.json();
+                    }).then((data)=>{
+                        if(data.ok == 1){
+                            $(`#${listItemID}`).remove();
+                            displayDeleteMessage(true,"Task successfully deleted");
+                        }
+                    });
+                });
+            }
+
+
+            const buildIDS = (todo)=>{
+                return {
+                    editID : "edit_" + todo._id,
+                    deleteID : "delete_" + todo._id,
+                    listItemID : "listItem_" + todo._id,
+                    todoID : "todo_" + todo._id,
+                    completeID : "complete_" + todo._id
+                }
+            }
+
+            function onCheck(){
+                console.log("checked")
+            }
+
+            const buildTemplate = (todo,ids)=>{
+                return `<li class="list-group-item" id="${ids.listItemID}">
+                            <div class="row">
+                                <div class="col-md-4" class="checking" id="${ids.todoID}">${todo.todo}</div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-right">
+                                    
+                                 <!--   <button title="Mark as Completed" class="btn" class="completeButton" id="${ids.completeID}"><i class="fas fa-check mdb-gallery-view-icon">${ids.complete}</i></button> -->
+                                    <button title="Edit Task" class="btn" id="${ids.editID}"><i class="fa fa-edit"></i></button>
+                                    <button title="Delete Task" class="btn" alt="Delete task" id="${ids.deleteID}"><i class="fa fa-trash"></i></button>
+                                    <!-- <button type="button" class="btn btn-danger" id="${ids.deleteID}">Delete</button> -->
+                                </div>
+                            </div>
+                       </li>`;
+            }
+
+            const displayTodos = (data)=>{
+                data.forEach((todo)=>{
+                    let ids = buildIDS(todo);
+                    display.append(buildTemplate(todo,ids));
+                    editTodo(todo,ids.todoID,ids.editID);
+                    deleteTodo(todo,ids.listItemID,ids.deleteID);
+                });
+            }
+
+         
+            form.submit((e)=>{
+                e.preventDefault();
+                fetch('/',{
+                    method : 'post',
+                    body : JSON.stringify({todo : todoUserInput.val()}),
+                    headers : {
+                        "Content-Type" : "application/json; charset=utf-8"
+                    }
+                }).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    if(!data.error){
+                        if(data.result.ok == 1 && data.result.n == 1){
+                            let ids = buildIDS(data.document);
+                            display.append(buildTemplate(data.document,ids));
+                            editTodo(data.document,ids.todoID,ids.editID);
+                            deleteTodo(data.document,ids.listItemID,ids.deleteID);
+                            displayMessage(true,data.msg);
+                        }
+                    }
+                    else
+                        displayMessage(false,data.error.message);
+
+                    resetTodosInput();
+                    
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
