@@ -1,7 +1,8 @@
 const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const data_base_name = "my_database";
-const url = "mongodb://localhost:27017";
+//const url = "mongodb://localhost:27017";
+const url = "mongodb+srv://Sunil_admin:Sunil001@cluster0-eylep.mongodb.net/test?retryWrites=true&w=majority"
 const mongoOptions = {useNewUrlParser : true,useUnifiedTopology: true};
 
 const state = {
