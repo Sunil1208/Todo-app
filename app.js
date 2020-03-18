@@ -10,7 +10,8 @@ const port = process.env.PORT ||5050
 
 const schema = Joi.object().keys({
     todo: Joi.string().required(),
-    completed: false
+    //completed: false
+    completed: Joi.boolean().default(false)
 });
 
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 
 // read
 app.get('/getTodos', (req, res) => {
@@ -42,7 +44,7 @@ app.put('/:id', (req, res) => {
         _id: database.getPrimaryKey(todoID)
     }, {
         $set: {
-            todo: userInput.todo
+            todo: userInput.todo,
         }
     }, {
         returnOriginal: false
@@ -55,7 +57,7 @@ app.put('/:id', (req, res) => {
     });
 });
 
-app.post('/:id/completed', (req, res) => {
+app.put('/:id/completed', (req, res) => {
 
     const todoID = req.params.id;
 
@@ -63,6 +65,7 @@ app.post('/:id/completed', (req, res) => {
         _id: database.getPrimaryKey(todoID)
     }, {
         $set: {
+            //todo: todo,
             completed:true
         }
     }, {
@@ -72,10 +75,33 @@ app.post('/:id/completed', (req, res) => {
             console.log(err);
         else {
             res.json(result);
+            console.log("completed");
         }
     });
 });
 
+app.put('/:id/notcompleted', (req, res) => {
+
+    const todoID = req.params.id;
+
+    database.getDB().collection(collection).findOneAndUpdate({
+        _id: database.getPrimaryKey(todoID)
+    }, {
+        $set: {
+            //todo: todo,
+            completed:false
+        }
+    }, {
+        returnOriginal: false
+    }, (err, result) => {
+        if (err)
+            console.log(err);
+        else {
+            res.json(result);
+            console.log("Not completed");
+        }
+    });
+});
 
 //Creating the database
 app.post('/', (req, res, next) => {
@@ -95,7 +121,7 @@ app.post('/', (req, res, next) => {
                     res.json({
                         result: result,
                         document: result.ops[0],
-                        complete: false,
+                        //completed:false,
                         msg: "Task Successfully added!!",
                         msg1: "Task deleted successfully",
                         error: null
