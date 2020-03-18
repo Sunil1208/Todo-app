@@ -19,9 +19,9 @@
     height: 30px; /*Desired height*/
   }
 
-  .alert {
-    animation: autoHide 0s ease-in 4s forwards;
-}
+  /* .alert {
+    animation: autoHide 0s ease-in 2s forwards;
+} */
 
 @keyframes autoHide {
     to {
