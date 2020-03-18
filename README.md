@@ -1,8 +1,8 @@
 # **TODO Application**
 
-A simple and interactive todo application to store all the task to be done.\
+A simple and interactive todo application to store all the task to be done.
 
-Technologies used:\
+Technologies used:
 
 * Nodejs
 * Database - MongoDB
