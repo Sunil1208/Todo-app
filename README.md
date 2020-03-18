@@ -1,11 +1,20 @@
 # **TODO Application**
 
 A simple and interactive todo application to store all the task to be done.\
+
+Technologies used:\
+
+* Nodejs
+* Database - MongoDB
+* Express
+
 It has the following features:
 
 > * **Add Task**
 > * **Edit Task**
 > * **Delete Task**
+> * **Mark task as Completed**
+> * **Mark task as Incomplete**
 
 ## **ScreenShots**
 
@@ -26,6 +35,18 @@ It has the following features:
 * ### **Deleting Tasks**
 
 ![DeleteTask](/Resources/todo2.png)
+
+* ### **Mark Task as Completed**
+
+>When you hit the mark as complete button on a task, it will render that task into the completed task list.
+
+![CompletedTask](/Resoures/markcompletedbutton.png)
+
+* ### **Mark Task as Incomplete**
+
+>When you hit the mark as incomplete button on a task, it will render it back to the Uncompleted task list.
+
+![IncompleteTask](/Resources/markincompletebutton.png)
 
 ## **Extra Features Added**
 
@@ -48,6 +69,10 @@ It has the following features:
     "path": "^0.12.7"
   }
 ```
+
+> **Joi :** Joi allows you to create blueprints or schemas for JavaScript objects to ensure validation of key information.\
+>**Nodemon :** Nodemon is a utility that will monitor for any changes in your source and automatically restart your server.Just use nodemon instead of node to run your code, and now your process will automatically restart when your code changes.\
+>**body-parser :** Allows express to read the body and then parse that into a Json object that we can understand.
 
 ## **Running the app**
 
