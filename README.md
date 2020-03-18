@@ -40,7 +40,7 @@ It has the following features:
 
 >When you hit the mark as complete button on a task, it will render that task into the completed task list.
 
-![CompletedTask](/Resoures/markcompletedbutton.png)
+![CompletedTask](Resources/markcompletedbutton.png)
 
 * ### **Mark Task as Incomplete**
 
@@ -52,11 +52,11 @@ It has the following features:
 
 * **Alert Class task is added**
 
-![Task_added_alert](/Resources/addalert.png)
+![Task_added_alert](Resources/taskadded.png)
 
 * **Alert Class when task is deleted**
 
-![Task_delete_alert](/Resources/deletealert.png)
+![Task_delete_alert](Resources/taskdeleted.png)
 
 ## **Dependencies**
 
