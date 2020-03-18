@@ -16,7 +16,7 @@
     <link href="/css/bootstrap.min.css">
     <!-- Material Design Bootstrap -->
     <link href="/css/mdb.min.css">
-    <link rel="stylesheet" type="text/css" href="/Resources/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Todo Application</title>
 </head>
 
@@ -192,27 +192,12 @@
                         return response.json();
 
                     }).then((data) => {
-                        //console.log(data)
-                        console.log(data.value.completed)
-                        let final_text = data.value.todo
-                        //console.log(`<strike>This is working I guess ${final_text}</strike>`)
-                        //data.value.todo=`<strike>${final_text}</strike>`
+                        window.location.reload();
                         let final_complete = data.value.completed
                         if (final_complete == true) {
                             let ids = buildIDS(todo)
                             complete.append(buildTemplate1(todo, ids))
-                            //let todoIndex = $(`#${todoID}`);
-                            //console.log(todoIndex)
-                            //console.log(todoIndex[0])
-                            //console.log(todoIndex[0].innerText)
-                            //todoIndex[0].innerHTML="Trying to change"                            
-                            //todoIndex.innerHTML="Successfully changed"
-                            //todo = "Successfully changed123"
-
-                            //console.log(data,"Striking performed")
-                            //todoIndex.html(data.value.complete);
-                            //todoIndex.html(data.body.strike())
-                            //resetTodosInput()
+                     
                         }
                     });
                 });
@@ -236,6 +221,7 @@
                         return response.json();
 
                     }).then((data) => {
+                        window.location.reload();
                         //console.log(data)
                         console.log(data.value.completed)
 
