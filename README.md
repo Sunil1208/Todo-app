@@ -58,6 +58,12 @@ It has the following features:
 
 ![Task_delete_alert](Resources/taskdeleted.png)
 
+## **Error**
+
+**When a wrong url is entered, it will lead to the following error page.**
+
+![Error](Resources/todoError.png)
+
 ## **Dependencies**
 
 ```"dependencies": {

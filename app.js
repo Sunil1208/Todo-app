@@ -8,6 +8,8 @@ const collection = "todo";
 const app = express();
 const port = process.env.PORT ||5050
 
+const errorPath=path.join(__dirname,'Error')
+
 const schema = Joi.object().keys({
     todo: Joi.string().required(),
     //completed: false
@@ -21,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.static("Public")) 
+app.use(express.static(errorPath))
 
 
 // read
@@ -154,6 +157,10 @@ app.use((err, req, res, next) => {
         }
     });
 })
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname,'Error/errorHTML.html'))
+ })
 
 database.connect((err) => {
 
