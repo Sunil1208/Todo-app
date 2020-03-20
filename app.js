@@ -6,9 +6,9 @@ const Joi = require('joi');
 const database = require("./database");
 const collection = "todo";
 const app = express();
-const port = process.env.PORT ||5050
+const port = process.env.PORT || 5050
 
-const errorPath=path.join(__dirname,'Error')
+const errorPath = path.join(__dirname, 'Error')
 
 const schema = Joi.object().keys({
     todo: Joi.string().required(),
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.use(express.static("Public")) 
+app.use(express.static("Public"))
 app.use(express.static(errorPath))
 
 
@@ -71,7 +71,7 @@ app.put('/:id/completed', (req, res) => {
     }, {
         $set: {
             //todo: todo,
-            completed:true
+            completed: true
         }
     }, {
         returnOriginal: false
@@ -94,7 +94,7 @@ app.put('/:id/notcompleted', (req, res) => {
     }, {
         $set: {
             //todo: todo,
-            completed:false
+            completed: false
         }
     }, {
         returnOriginal: false
@@ -159,8 +159,8 @@ app.use((err, req, res, next) => {
 })
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname,'Error/errorHTML.html'))
- })
+    res.sendFile(path.join(__dirname, 'Error/errorHTML.html'))
+})
 
 database.connect((err) => {
 

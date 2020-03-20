@@ -1,6 +1,6 @@
-body{
+body {
   background-image: url(./bgimage2\ .png);
-  background-size: cover; 
+  background-size: cover;
   opacity: 80%;
   font-family: 'Poppins', sans-serif;
 }
@@ -15,28 +15,31 @@ body{
     cursor: pointer; 
   }
   */
-  
-  /* Darker background on mouse-over */
-  .btn:hover {
-    background-color: royalblue;
-  }
 
-  input[type="checkbox"]{
-    width: 30px; /*Desired width*/
-    height: 30px; /*Desired height*/
-  }
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: royalblue;
+}
 
-  /* .alert {
+input[type="checkbox"] {
+  width: 30px;
+  /*Desired width*/
+  height: 30px;
+  /*Desired height*/
+}
+
+/* .alert {
     animation: autoHide 0s ease-in 2s forwards;
 } */
 
 @keyframes autoHide {
-    to {
-        width:0;
-        height:0;
-        overflow:hidden;
-    }}
-  
+  to {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
 /* .checking{
   text-decoration: line-through;
 }
